@@ -1,9 +1,19 @@
 #ifndef _global_h_
 #define _global_h_
 
-#define MAX_LOADSTRING 100
-#define MAX_USERS		10
+#define MAX_LOADSTRING	100
 #define MAX_LEVELS		3
+#define MAX_LENGTH		30
+
+#define LEVEL_1		1
+#define LEVEL_2		2
+#define LEVEL_3		3
+
+typedef struct {
+	int level;
+	int life;
+	int guns;
+} game_data;
 
 extern TCHAR    szTitle[MAX_LOADSTRING];					
 extern TCHAR    szWindowClass[MAX_LOADSTRING];	    		
