@@ -147,6 +147,10 @@ void dispatchKeys() {
 	if (bArrKeys['R']) {
 		camReset();
 	}
+	if (bArrKeys['P']) {
+		menu = TRUE;
+		bArrKeys['P'] = FALSE;
+	}
 	if (bArrKeys['F']) {
 		if (fog == TRUE)
 		{
@@ -185,6 +189,13 @@ void dispatchKeys_userinput(){
 	}
 }
 
+void dispatchKeys_menu(){
+	if (bArrKeys[VK_RETURN]){
+		menu = FALSE;
+		bArrKeys[VK_RETURN] = FALSE;
+	}
+}
+
 int drawUserInputBox(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0, 0, 0, 1);
@@ -199,6 +210,23 @@ int drawUserInputBox(){
 
 	glLineWidth(0.5); 
 	glColor3f(1.0, 1.0, 1.0);
+
+	glRasterPos2f(-0.4, 0.15);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'N');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'T');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'R');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ' ');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'U');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'S');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'R');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'N');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'A');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'M');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ':');
 
 	glBegin(GL_LINES);
 	glVertex3f(-0.4, 0.1, 0.0);
@@ -224,6 +252,32 @@ int drawUserInputBox(){
 	for (int i = 0; i < index; i++){
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, username[i]);
 	}
+
+	glEnable(GL_DEPTH_TEST);
+
+	return TRUE;
+}
+
+int drawMenu(){
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0, 0, 0, 1);
+	glLoadIdentity();
+
+	glDisable(GL_DEPTH_TEST);
+
+	glScalef(8.0, 8.0, 8.0);
+	glTranslatef(0, 0, -1);
+
+	glColor3f(0.0f,1.0f,0.0f);
+
+	glLineWidth(0.5); 
+	glColor3f(1.0, 1.0, 1.0);
+
+	glRasterPos2f(-0.4, 0.15);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'M');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'N');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'U');
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -270,7 +324,9 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 							dispatchKeys();
 						}
 						else{
-							menu = TRUE;
+							drawMenu();
+							SwapBuffers(hDC);
+							dispatchKeys_menu();
 						}
 					}
 					else{
