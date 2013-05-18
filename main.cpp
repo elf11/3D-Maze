@@ -131,10 +131,10 @@ void dispatchKeys() {
         camRotate(0.0f, 0.9f, 0.0f);
     }
     if (bArrKeys['G'])	{
-        camRotate(0.0f, 0.0f, -0.9f);
+        camRotate(0.0f, 0.0f, 0.9f);
     }
     if (bArrKeys['H']) {
-        camRotate(0.0f, 0.0f, 0.9f);
+        camRotate(0.0f, 0.0f, -0.9f);
     }
     if (bArrKeys['R']) {
         camReset();
