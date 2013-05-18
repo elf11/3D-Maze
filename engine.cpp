@@ -819,7 +819,7 @@ int drawGLScene(GLvoid)
 			//charPos.fY = PCam->m_fPosZ;
 			//glTranslatef(0.0f, 0.0f, -0.5);
 			int offset = 0.3;
-			draw_Character(PCam->m_fPosX - 0.3, 0.1f, PCam->m_fPosZ + 0.2); 
+			//draw_Character(PCam->m_fPosX - 0.3, 0.1f, PCam->m_fPosZ + 0.2); 
 		}
 		
 		// Fog

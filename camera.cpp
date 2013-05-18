@@ -59,14 +59,14 @@ void _CCamera::moveStrafe(float fSpeed) {
 void _CCamera::moveUp(float fSpeed) {
     if (nPlayerControls == 2) {
         this->m_fPosY += fSpeed;  // No view angle dependancies
-		if (this->m_fPosY < 0.0)
+		if (this->m_fPosY < 0.1)
 		{
 			this->m_fPosY = 0.2;
-		}
+		}/*
 		if (this->m_fPosY > 1.0)
 		{
 			this->m_fPosY = 0.9;
-		}
+		}*/
     }    
 }
 
