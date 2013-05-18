@@ -269,7 +269,7 @@ GLvoid destroyGLWindow(GLvoid)	{
 	}
 }
 
-BOOL createGLWindow(TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreenFlag) {
+BOOL createGLWindow(game_data data, TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreenFlag) {
     GLuint		PixelFormat;
     WNDCLASS	wc;					        		           
     DWORD		dwExStyle;

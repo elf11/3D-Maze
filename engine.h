@@ -21,7 +21,7 @@ int loadGLTextures(void);
 void redisplay();
 
 void destroyGLWindow(void);
-BOOL createGLWindow(TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreen);
+BOOL createGLWindow(game_data data, TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreen);
 void resizeGLScene(int nWidth, int nHeight);
 
 void camForward(float fSpeed);
