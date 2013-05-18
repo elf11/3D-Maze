@@ -11,7 +11,7 @@
 #include <gl\gl.h>
 #include "glut.h"
 
-#include "Save.h";
+#include "Save.h"
 #include "main.h"
 #include "engine.h"
 #include "camera.h"
@@ -32,6 +32,7 @@ std::string		user;
 game_data		data;
 int				addUser = 1;
 int				index = 0;
+int				menuIndex = 0;
 
 HGLRC			hRC		= NULL;
 HDC				hDC		= NULL;
@@ -202,7 +203,20 @@ void dispatchKeys_userinput(){
 void dispatchKeys_menu(){
 	if (bArrKeys[VK_RETURN]){
 		menu = FALSE;
+		menuIndex = 0;
 		bArrKeys[VK_RETURN] = FALSE;
+	}
+	if (bArrKeys[VK_DOWN]){
+		menuIndex++;
+		if (menuIndex >= 5)
+			menuIndex = 0;
+		bArrKeys[VK_DOWN] = FALSE;
+	}
+	if (bArrKeys[VK_UP]){
+		menuIndex--;
+		if (menuIndex < 0)
+			menuIndex = 5;
+		bArrKeys[VK_UP] = FALSE;
 	}
 }
 
@@ -283,11 +297,106 @@ int drawMenu(){
 	glLineWidth(0.5); 
 	glColor3f(1.0, 1.0, 1.0);
 
-	glRasterPos2f(-0.4, 0.15);
+	glRasterPos2f(-0.1, 0.5);
 	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'M');
 	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
 	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'N');
 	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'U');
+
+	if (menuIndex != 0)
+		glColor3f(0.5, 0.5, 0.5);
+	else
+		glColor3f(0.9, 0.9, 0.9);
+	glBegin(GL_QUADS);
+	glVertex3f(-0.2, 0.3, 0);
+	glVertex3f(0.2, 0.3, 0);
+	glVertex3f(0.2, 0.4, 0);
+	glVertex3f(-0.2, 0.4, 0);
+	glEnd();
+	glColor3f(0, 0, 0);
+	glRasterPos2f(-0.19, 0.35);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'S');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'T');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'A');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'R');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'T');
+
+	if (menuIndex != 1)
+		glColor3f(0.5, 0.5, 0.5);
+	else
+		glColor3f(0.9, 0.9, 0.9);
+	glBegin(GL_QUADS);
+	glVertex3f(-0.2, 0.1, 0);
+	glVertex3f(0.2, 0.1, 0);
+	glVertex3f(0.2, 0.2, 0);
+	glVertex3f(-0.2, 0.2, 0);
+	glEnd();
+	glColor3f(0, 0, 0);
+	glRasterPos2f(-0.19, 0.15);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'H');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'L');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'P');
+
+	if (menuIndex != 2)
+		glColor3f(0.5, 0.5, 0.5);
+	else
+		glColor3f(0.9, 0.9, 0.9);
+	glBegin(GL_QUADS);
+	glVertex3f(-0.2, -0.1, 0);
+	glVertex3f(0.2, -0.1, 0);
+	glVertex3f(0.2, 0, 0);
+	glVertex3f(-0.2, 0, 0);
+	glEnd();
+	glColor3f(0, 0, 0);
+	glRasterPos2f(-0.19, -0.05);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'L');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'V');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'L');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ' ');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, '1');
+
+	if (menuIndex != 3)
+		glColor3f(0.5, 0.5, 0.5);
+	else
+		glColor3f(0.9, 0.9, 0.9);
+	glBegin(GL_QUADS);
+	glVertex3f(-0.2, -0.3, 0);
+	glVertex3f(0.2, -0.3, 0);
+	glVertex3f(0.2, -0.2, 0);
+	glVertex3f(-0.2, -0.2, 0);
+	glEnd();
+	glColor3f(0, 0, 0);
+	glRasterPos2f(-0.19, -0.25);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'L');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'V');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'L');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ' ');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, '2');
+
+	if (menuIndex != 4)
+		glColor3f(0.5, 0.5, 0.5);
+	else
+		glColor3f(0.9, 0.9, 0.9);
+	glBegin(GL_QUADS);
+	glVertex3f(-0.2, -0.5, 0);
+	glVertex3f(0.2, -0.5, 0);
+	glVertex3f(0.2, -0.4, 0);
+	glVertex3f(-0.2, -0.4, 0);
+	glEnd();
+	glColor3f(0, 0, 0);
+	glRasterPos2f(-0.19, -0.45);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'L');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'V');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'L');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ' ');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, '3');
 
 	glEnable(GL_DEPTH_TEST);
 
