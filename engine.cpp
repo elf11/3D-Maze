@@ -17,6 +17,8 @@
 #include "Generator.h"
 #include "Sky.h"
 #include "Math.h"
+#include "md2.h"
+
 
 class Sky;
 
@@ -30,6 +32,11 @@ int nWallList   = 0;
 int nTopList    = 0;
 
 Sky *sky;
+
+// MD2 skelet
+CMD2Data schelet;
+CMD2Instance *scheletInstance;
+
 
 PCCamera PCam;
 
@@ -177,6 +184,13 @@ int initOpenGL(GLvoid) {
 	}
 
 	sky = new Sky;
+
+	schelet.Load("hueteotl\\tris.md2", "hueteotl\\hueteotl_white.tga", "hueteotl\\weapon.md2", "hueteotl\\weapon.tga", 0.015f);
+	scheletInstance = schelet.GetInstance();
+	scheletInstance->SetAnimation(CMD2Instance::IDLE, CMD2Instance::IDLE);
+	scheletInstance->Rotate(0);
+	scheletInstance->Move(0.0f, 0.0f, 2.0f);
+
     
     // Setting up Z-Buffer
     glClearDepth(1.0);
@@ -801,13 +815,21 @@ int drawGLScene(GLvoid)
 				glDisable(GL_FOG);
 			}
 
-
+		
 		
 		draw_Skybox(0, 0, 0, PCam->m_fPosX, PCam->m_fPosY, PCam->m_fPosZ);
 		
 		draw_ground(100,100,0,0,0.0);
 
+		glPushMatrix();
 		
+		glEnable(GL_TEXTURE_2D);
+		
+		scheletInstance->Move(PCam->m_fPosX + 1.5f, PCam->m_fPosY - 0.5f, PCam->m_fPosZ);
+		scheletInstance->Rotate(PCam->m_fYaw - 90);
+		scheletInstance->Render();
+		
+		glPopMatrix();
 
         glCallList(nWallList);
 
