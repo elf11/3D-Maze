@@ -807,8 +807,9 @@ int drawGLScene(GLvoid)
 
 		glPushMatrix();
 		glColor3f( 0.8f, 0.8f, 0.8f);
-		glTranslatef(portalPos.fX , 0.4f, portalPos.fY);
-		glutSolidTorus(0.1, 0.2, 15, 15);
+		
+		//glTranslatef(portalPos.fX , 0.4f, portalPos.fY);
+		//glutSolidTorus(0.1, 0.2, 15, 15);
 		glPopMatrix();
 
 		//PCam = new CCamera(startPos.fX, 0.3, startPos.fY);
