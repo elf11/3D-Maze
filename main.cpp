@@ -15,11 +15,14 @@
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "GLAUX.lib")
 
-BOOL startGame = FALSE;
+#define MAX_NAME_LENGTH 15
+
+BOOL startGame = FALSE, menu = FALSE;
 
 TCHAR		szTitle[MAX_LOADSTRING];                          
 TCHAR		szWindowClass[MAX_LOADSTRING];
-const char	*username;
+char	username[MAX_NAME_LENGTH];
+int index = 0;
 
 HGLRC           hRC     = NULL;					        
 HDC             hDC     = NULL;					        
@@ -164,19 +167,65 @@ void dispatchKeys() {
 }
 
 void dispatchKeys_userinput(){
-    if (bArrKeys[VK_RETURN]) {
+    if (bArrKeys[VK_RETURN]){
 		startGame = TRUE;
     }
+    if (bArrKeys[8]){
+		index--;
+		bArrKeys[8] = FALSE;
+    }
+	
+	for (int i = 0; i < 28; i++){
+		if (bArrKeys['A' + i]){
+			if (index < MAX_NAME_LENGTH){
+				username[index++] = 'A' + i;
+				bArrKeys['A' + i] = FALSE;
+			}
+		}
+	}
 }
 
 int drawUserInputBox(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
 	glClearColor(0, 0, 0, 1);
+   	glLoadIdentity();
 
-	glPushMatrix();
+   	glDisable(GL_DEPTH_TEST);
 
-	glPopMatrix();
+   	glScalef(8.0, 8.0, 8.0);
+   	glTranslatef(0, 0, -1);
+   	
+	glColor3f(0.0f,1.0f,0.0f);   					 // Set The Color To Green
+
+	glLineWidth(0.5); 
+	glColor3f(1.0, 1.0, 1.0);
+
+	glBegin(GL_LINES);
+	glVertex3f(-0.4, 0.1, 0.0);
+	glVertex3f(0.4, 0.1, 0.0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex3f(-0.4, -0.1, 0.0);
+	glVertex3f(0.4, -0.1, 0.0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex3f(-0.4, 0.1, 0.0);
+	glVertex3f(-0.4, -0.1, 0.0);
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVertex3f(0.4, 0.1, 0.0);
+	glVertex3f(0.4, -0.1, 0.0);
+	glEnd();
+
+	glRasterPos2f(-0.3, 0);
+	for (int i = 0; i < index; i++){
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, username[i]);
+	}
+
+   	glEnable(GL_DEPTH_TEST);
 
 	return TRUE;
 }
@@ -198,10 +247,6 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 		return 0;           							
 	}
 
-	//Get user index from users file
-	username = "Andreea";
-
-
 	PlaySound(TEXT("lotr.wav"), NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
     
     while (!bDone) {     								
@@ -219,9 +264,14 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 				    bDone = TRUE;		        		
 				} else {            					
 					if (startGame){
-						drawGLScene();		        		
-						SwapBuffers(hDC);			        
-						dispatchKeys();
+						if (menu){
+							drawGLScene();		        		
+							SwapBuffers(hDC);			        
+							dispatchKeys();
+						}
+						else{
+							menu = TRUE;
+						}
 					}
 					else{
 						drawUserInputBox();
