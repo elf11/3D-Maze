@@ -83,10 +83,10 @@ void load_user(game_data *data, std::string user, int* u_id) {
 		outfile << path << std::endl;
 		std::ofstream newfile(path.c_str());
 		newfile << 0 << std::endl;
-		newfile << 100 << std::endl;
+		newfile << 99 << std::endl;
 		newfile << 0 << std::endl;
 		data->level = 0;
-		data->life = 100;
+		data->life = 99;
 		data->guns = 0;
 	}
 

@@ -523,6 +523,38 @@ int loadGLTextures(void) {
 	return Status;	
 }
 
+void draw_health(int life){
+
+	glDisable(GL_DEPTH_TEST);
+
+	glPushMatrix();
+	glLoadIdentity();
+		
+	glScalef(8.0, 8.0, 8.0);
+	glColor3f(1.0, 0, 0);
+	glTranslatef(2.5, 2.55, -5);
+
+	glColor3f(0, 0, 0);
+
+	glRasterPos2f(0, 0);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'H');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'e');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'a');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'l');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 't');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'h');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ' ');
+
+	glColor3f(1.0, 0, 0);
+
+	glRasterPos2f(0.9, 0);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, life / 10 + '0');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, life % 10 + '0');
+
+	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
+}
+
 // draw the ground plane
 void draw_ground(int dimx, int dimy, int tessx, int tessy, float height){
 
@@ -755,7 +787,7 @@ void redisplay()
 	glPopMatrix();
 }
 
-int drawGLScene(GLvoid)	
+int drawGLScene(int life)	
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -826,12 +858,14 @@ int drawGLScene(GLvoid)
 		glEnable(GL_TEXTURE_2D);
 		
 		scheletInstance->Move(PCam->m_fPosX + 1.5f, PCam->m_fPosY - 0.5f, PCam->m_fPosZ);
-		scheletInstance->Rotate(PCam->m_fYaw - 90);
+		scheletInstance->Rotate(90 - PCam->m_fYaw);
 		scheletInstance->Render();
 		
 		glPopMatrix();
 
         glCallList(nWallList);
+
+		draw_health(life);
 
     glPopMatrix();
 
