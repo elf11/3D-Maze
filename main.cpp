@@ -34,7 +34,7 @@ BOOL    np = FALSE;
 BOOL    pp = FALSE;
 
 
-BOOL	bUseLighting    = TRUE;						
+BOOL	bUseLighting    = FALSE;						
 BOOL    bCullFaces      = FALSE;
 BOOL    bDrawNormals    = FALSE;
 BOOL    bNoClipping     = FALSE;

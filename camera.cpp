@@ -58,11 +58,11 @@ void _CCamera::moveStrafe(float fSpeed) {
 
 void _CCamera::moveUp(float fSpeed) {
     if (nPlayerControls == 2) {
-        this->m_fPosY += fSpeed;  // No view angle dependancies
-		if (this->m_fPosY < 0.1)
+        //this->m_fPosY += fSpeed;  // No view angle dependancies
+		/*if (this->m_fPosY < 0.1)
 		{
 			this->m_fPosY = 0.2;
-		}/*
+		}
 		if (this->m_fPosY > 1.0)
 		{
 			this->m_fPosY = 0.9;
@@ -114,9 +114,11 @@ void _CCamera::mouseLook() {
     offsetY = 0;
 }
 
+//modificati pe aici daca vreti sa porneasca de la o anumita inaltime pe Y. 
 void _CCamera::correctPosition(TVector3D vNewPosition) {
     this->m_fPosX = vNewPosition.fX;
-    this->m_fPosY = vNewPosition.fY;
+	this->m_fPosY = 0.5;
+    //this->m_fPosY = vNewPosition.fY;
 	if (this->m_fPosY < 0.0)
 		{
 			this->m_fPosY = 0.2;
