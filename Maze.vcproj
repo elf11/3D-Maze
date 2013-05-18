@@ -192,6 +192,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Math.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Sky.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -210,6 +218,10 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\TargaImage.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\vector.cpp"
@@ -246,6 +258,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Math.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Resource.h"
 				>
 			</File>
@@ -254,11 +270,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TargaImage.h"
+				>
+			</File>
+			<File
 				RelativePath=".\targetver.h"
 				>
 			</File>
 			<File
 				RelativePath=".\vector.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vector1.h"
 				>
 			</File>
 		</Filter>
