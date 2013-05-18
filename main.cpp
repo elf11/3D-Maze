@@ -1,5 +1,7 @@
 #include <stdafx.h>
 #include <windows.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <MMSystem.h>
 
 #include <gl\gl.h>								
@@ -13,8 +15,9 @@
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "GLAUX.lib")
 
-TCHAR szTitle[MAX_LOADSTRING];                          
-TCHAR szWindowClass[MAX_LOADSTRING];                    
+TCHAR		szTitle[MAX_LOADSTRING];                          
+TCHAR		szWindowClass[MAX_LOADSTRING];
+const char	*username;
 
 HGLRC           hRC     = NULL;					        
 HDC             hDC     = NULL;					        
@@ -151,6 +154,11 @@ void dispatchKeys() {
 			redisplay();
 		}
 	}
+
+	if (bArrKeys['S']) {
+		FILE* fp;
+		
+	}
 }
 
 int WINAPI WinMain(HINSTANCE	hInstance,
@@ -170,7 +178,13 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 		return 0;           							
 	}
 
-	PlaySound(TEXT("ObstacleCourse.wav"), NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
+	//User menu and stuff - get username
+
+	//Get user index from users file
+	username = "Andreea";
+
+
+	PlaySound(TEXT("lotr.wav"), NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
     
     while (!bDone) {     								
         if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
