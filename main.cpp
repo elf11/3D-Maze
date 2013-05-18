@@ -323,10 +323,8 @@ void dispatchKeys() {
 	}
 
 	if (bArrKeys['M']) {
-		video();
-		//ReleaseDC( hWnd, hDC );
-		//hWnd = NULL;
-		//hDC = GetDC( hWnd );
+		//video_draw = TRUE;
+		bArrKeys['M'] = false;
     }
 
 	if (bArrKeys['P']) {
