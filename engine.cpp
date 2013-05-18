@@ -5,9 +5,7 @@
 #include <MMSystem.h>
 #include <math.h>
 #include <time.h>
-
-
-#include <GL/gl.h>
+#include "Includes\glee\GLee.h"
 #include <GL/glu.h>
 #include "GL/glaux.h"
 #include "glut.h"
@@ -17,6 +15,10 @@
 #include "camera.h"
 #include "vector.h"
 #include "Generator.h"
+#include "Sky.h"
+#include "Math.h"
+
+class Sky;
 
 #define M_PI  3.1415926535
 
@@ -26,6 +28,8 @@ DWORD dwLastFPS = 0;
 
 int nWallList   = 0;
 int nTopList    = 0;
+
+Sky *sky;
 
 PCCamera PCam;
 
@@ -94,6 +98,8 @@ int **m;
 
 #define MAZE_HEIGHT (20)
 #define MAZE_WIDTH  (20)
+
+
 
 int arrMazeData[MAZE_HEIGHT][MAZE_WIDTH];
 TVector2D *freeCells;
@@ -170,6 +176,7 @@ int initOpenGL(GLvoid) {
 		return FALSE;                                    
 	}
 
+	sky = new Sky;
     
     // Setting up Z-Buffer
     glClearDepth(1.0);
@@ -198,6 +205,8 @@ int initOpenGL(GLvoid) {
     
 	PCam = new CCamera(startPos.fX, 0.3, startPos.fY);
     
+	
+
     initLists();
     
     return TRUE;                                                // Initialization went OK
@@ -547,66 +556,17 @@ void draw_Skybox(float x, float y, float z, float width, float height, float len
 	x = x - width  / 2;
 	y = y - height / 2;
 	z = z - length / 2;
-
+	
 	glEnable(GL_TEXTURE_2D);
 
-	// Draw Front side
-	glBindTexture(GL_TEXTURE_2D, haze);
-	glBegin(GL_QUADS);	
-		glTexCoord2f(1.0f, 0.0f); glVertex3f(x,	y, z + length);
-		glTexCoord2f(1.0f, 1.0f); glVertex3f(x,	y + height, z + length);
-		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y+height, z + length); 
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z + length);
-	glEnd();
- 
-	// Draw Back side
-	glBindTexture(GL_TEXTURE_2D, haze);
-	glBegin(GL_QUADS);		
-		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z);
-		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height, z); 
-		glTexCoord2f(0.0f, 1.0f); glVertex3f(x,	y + height,	z);
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(x,	y, z);
-	glEnd();
-
-	// Draw Left side
-	glBindTexture(GL_TEXTURE_2D, haze);
-	glBegin(GL_QUADS);		
-		glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z);	
-		glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z + length); 
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z + length);
-		glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z);		
-	glEnd();
-
-	// Draw Right side
-	glBindTexture(GL_TEXTURE_2D, haze);
-	glBegin(GL_QUADS);		
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z);
-		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z + length);
-		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height,	z + length); 
-		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height,	z);
-	glEnd();
-
-	// Draw Up side
-	glBindTexture(GL_TEXTURE_2D, haze);
-	glBegin(GL_QUADS);		
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y + height - 30, z);
-		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y + height - 30, z + length ); 
-		glTexCoord2f(1.0f, 1.0f); glVertex3f(x,	y + height - 30, z + length);
-		glTexCoord2f(0.0f, 1.0f); glVertex3f(x,	y + height - 30, z);
-	glEnd();
-
-	// Draw Down side
-	glBindTexture(GL_TEXTURE_2D, haze);
-	glBegin(GL_QUADS);		
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(x,		  y,		z);
-		glTexCoord2f(1.0f, 0.0f); glVertex3f(x,		  y,		z + length);
-		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y,		z + length); 
-		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y,		z);
-	glEnd();
+	Vector3 cameraPos = Vector3(width, height, length);
+		//Vector3 cameraPos = Vector3(0,0,0);
+	sky->Render(cameraPos);
 
 	glDisable(GL_TEXTURE_2D);
 
 }
+
 
 void initLists() {
     nWallList   = genWalls();
@@ -805,6 +765,8 @@ int drawGLScene(GLvoid)
 	    glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
 		glEnable(GL_LIGHT1);
 
+		
+
 		glPushMatrix();
 		glColor3f( 0.8f, 0.8f, 0.8f);
 		
@@ -840,13 +802,16 @@ int drawGLScene(GLvoid)
 			}
 
 
-		draw_Skybox(0, 0, 0, 80, 200, 80);
-
+		
+		draw_Skybox(0, 0, 0, PCam->m_fPosX, PCam->m_fPosY, PCam->m_fPosZ);
+		
 		draw_ground(100,100,0,0,0.0);
+
+		
 
         glCallList(nWallList);
 
     glPopMatrix();
-   					
+
 	return TRUE;
 }

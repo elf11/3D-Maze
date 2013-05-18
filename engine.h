@@ -1,6 +1,8 @@
 #ifndef _engine_h_
 #define _engine_h_
 
+
+
 extern int nFrames;
 extern int nFPS;
 extern DWORD dwLastFPS;
@@ -9,7 +11,7 @@ int initOpenGL(void);
 
 int drawGLScene(void);
 void draw_ground(int dimx, int dimy, int tessx, int tessy, float height);
-void draw_Skybox(float x, float y, float z, float width, float height, float length);
+//void draw_Skybox(float x, float y, float z, float width, float height, float length);
 void draw_Character(float x, float y, float z);
 int maketex(const char* tfile,GLint xSize,GLint ySize); 
 
