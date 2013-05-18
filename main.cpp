@@ -422,7 +422,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 
 	PlaySound(TEXT("lotr.wav"), NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
 
-	drawGLScene();
+	drawGLScene(data.life);
 	SwapBuffers(hDC);
 
 	while (!bDone) {
@@ -442,11 +442,11 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 					if (startGame){
 						if (addUser == 1) {
 							user = username;
-;							load_user(&data, user, &user_id);
+							load_user(&data, user, &user_id);
 							addUser = 0;
 						}
 						if (!menu){
-							drawGLScene();
+							drawGLScene(data.life);
 							SwapBuffers(hDC);
 							dispatchKeys();
 						}

@@ -9,7 +9,7 @@ extern DWORD dwLastFPS;
 
 int initOpenGL(void);
 
-int drawGLScene(void);
+int drawGLScene(int life);
 void draw_ground(int dimx, int dimy, int tessx, int tessy, float height);
 //void draw_Skybox(float x, float y, float z, float width, float height, float length);
 void draw_Character(float x, float y, float z);
