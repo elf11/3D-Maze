@@ -18,9 +18,9 @@ void update_users_file(std::string user) {
 void save_user_data(game_data data, int userid) {
 	std::string path = "Users\\";
 	std::string file = NumberToString(userid);
-	path.append(file);
+	path.append(file.c_str());
 
-	std::ofstream out(file);
+	std::ofstream out(file.c_str());
 	out << data.level << std::endl;
 	out << data.life << std::endl;
 	out << data.guns << std::endl;
@@ -34,7 +34,7 @@ void load_user_data(game_data *data, int userid) {
 	std::string line;
 	std::string file = NumberToString(userid);
 	path.append(line);
-	std::ifstream infile(path);
+	std::ifstream infile(path.c_str());
 	//get level
 	std::getline(infile, line);
 	data->level = atoi(line.c_str());
@@ -81,7 +81,7 @@ void load_user(game_data *data, std::string user, int* u_id) {
 		std::string userid = NumberToString(i);
 		path.append(userid);
 		outfile << path << std::endl;
-		std::ofstream newfile(path);
+		std::ofstream newfile(path.c_str());
 		newfile << 0 << std::endl;
 		newfile << 100 << std::endl;
 		newfile << 0 << std::endl;
