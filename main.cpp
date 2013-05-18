@@ -425,7 +425,10 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 	drawGLScene(data.life);
 	SwapBuffers(hDC);
 
+
+	long int  melc = 0;
 	while (!bDone) {
+		
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 			if (msg.message == WM_QUIT) {
 				bDone = TRUE;
@@ -444,8 +447,15 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 							user = username;
 							load_user(&data, user, &user_id);
 							addUser = 0;
-						}
+						}	
+
 						if (!menu){
+							melc++;
+							if (melc== 400) {
+									data.life --;
+									melc = 0;
+							}
+
 							drawGLScene(data.life);
 							SwapBuffers(hDC);
 							dispatchKeys();
