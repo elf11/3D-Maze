@@ -15,6 +15,8 @@
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "GLAUX.lib")
 
+BOOL startGame = FALSE;
+
 TCHAR		szTitle[MAX_LOADSTRING];                          
 TCHAR		szWindowClass[MAX_LOADSTRING];
 const char	*username;
@@ -161,14 +163,33 @@ void dispatchKeys() {
 	}
 }
 
+void dispatchKeys_userinput(){
+    if (bArrKeys[VK_RETURN]) {
+		startGame = TRUE;
+    }
+}
+
+int drawUserInputBox(){
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+
+	glPushMatrix();
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1);
+
+	glPopMatrix();
+
+	return TRUE;
+}
+
 int WINAPI WinMain(HINSTANCE	hInstance,
 		           HINSTANCE	hPrevInstance,
 			       LPSTR		lpCmdLine,				
 			       int	    	nCmdShow)				
 {
- 	MSG msg;
- 	BOOL bDone = FALSE;                               
-	
+	MSG msg;
+	BOOL bDone = FALSE;                               ;
+
 	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadString(hInstance, IDC_GLMAZE3, szWindowClass, MAX_LOADSTRING);
 	
@@ -177,8 +198,6 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 	if (!createGLWindow(szTitle, 640, 480, 32, bFullscreen)) {
 		return 0;           							
 	}
-
-	//User menu and stuff - get username
 
 	//Get user index from users file
 	username = "Andreea";
@@ -200,9 +219,16 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 				if (bArrKeys[VK_ESCAPE]) {				
 				    bDone = TRUE;		        		
 				} else {            					
-				    drawGLScene();		        		
-					SwapBuffers(hDC);			        
-					dispatchKeys();
+					if (startGame){
+						drawGLScene();		        		
+						SwapBuffers(hDC);			        
+						dispatchKeys();
+					}
+					else{
+						drawUserInputBox();
+						SwapBuffers(hDC);
+						dispatchKeys_userinput();
+					}
                 }
             }
         }
