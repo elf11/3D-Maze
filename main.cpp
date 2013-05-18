@@ -1,12 +1,17 @@
 #include <stdafx.h>
+#include <sstream>
+#include <string>
 #include <windows.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
+#include <fstream>
 #include <MMSystem.h>
 
 #include <gl\gl.h>
 #include "glut.h"
 
+#include "Save.h";
 #include "main.h"
 #include "engine.h"
 #include "camera.h"
@@ -21,8 +26,12 @@ BOOL startGame = FALSE, menu = FALSE;
 
 TCHAR		szTitle[MAX_LOADSTRING];
 TCHAR		szWindowClass[MAX_LOADSTRING];
-char		username[MAX_NAME_LENGTH];
-int			index = 0;
+int				user_id;
+char			username[MAX_NAME_LENGTH];
+std::string		user;
+game_data		data;
+int				addUser = 1;
+int				index = 0;
 
 HGLRC			hRC		= NULL;
 HDC				hDC		= NULL;
@@ -165,8 +174,8 @@ void dispatchKeys() {
 	}
 
 	if (bArrKeys['S']) {
-		FILE* fp;
-		
+		//write data in user's file
+		save_user_data(data, user_id);
 	}
 }
 
@@ -322,6 +331,11 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 					bDone = TRUE;
 				} else {
 					if (startGame){
+						if (addUser == 1) {
+							user = username;
+;							load_user(&data, user, &user_id);
+							addUser = 0;
+						}
 						if (!menu){
 							drawGLScene();
 							SwapBuffers(hDC);

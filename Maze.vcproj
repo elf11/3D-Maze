@@ -204,6 +204,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Save.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Sky.cpp"
 				>
 			</File>
@@ -279,6 +283,10 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Save.h"
 				>
 			</File>
 			<File
