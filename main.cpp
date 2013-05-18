@@ -304,6 +304,9 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 
 	PlaySound(TEXT("lotr.wav"), NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
 
+	drawGLScene();
+	SwapBuffers(hDC);
+
 	while (!bDone) {
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 			if (msg.message == WM_QUIT) {
