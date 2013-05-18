@@ -1,3 +1,4 @@
+#include <stdafx.h>
 #include "md2.h"
 #include <cstdio>
 #include <cmath>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Maze"
 	ProjectGUID="{6E0CBE6C-75D8-4DEF-A3A5-E51A8A14DB4B}"
 	RootNamespace="GLMaze3"
@@ -196,6 +196,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\md2.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Sky.cpp"
 				>
 			</File>
@@ -259,6 +263,10 @@
 			</File>
 			<File
 				RelativePath=".\Math.h"
+				>
+			</File>
+			<File
+				RelativePath=".\md2.h"
 				>
 			</File>
 			<File
