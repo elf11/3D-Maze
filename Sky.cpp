@@ -77,8 +77,6 @@ bool Sky::Init(){
 	// now that the texture object is bound, specify a texture for it
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, skybox.GetWidth(), skybox.GetHeight(), GL_RGB, GL_UNSIGNED_BYTE, skybox.GetImage());
 	skybox.Release();
-	
-
 
 	//  fourth front side 
 	skybox.Load("Side4.tga");
