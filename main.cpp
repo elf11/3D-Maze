@@ -136,13 +136,6 @@ void dispatchKeys() {
     if (bArrKeys['H']) {
         camRotate(0.0f, 0.0f, -0.9f);
     }
-    if (bArrKeys['M'] && !sp) {
-        camAdjustSpeed(1.8f);
-    }
-    if (!bArrKeys['M']) {
-        sp = FALSE;
-        camAdjustSpeed(1.0f);
-    }
     if (bArrKeys['R']) {
         camReset();
     }
