@@ -2,6 +2,8 @@
 #define _global_h_
 
 #define MAX_LOADSTRING 100
+#define MAX_USERS		10
+#define MAX_LEVELS		3
 
 extern TCHAR    szTitle[MAX_LOADSTRING];					
 extern TCHAR    szWindowClass[MAX_LOADSTRING];	    		
