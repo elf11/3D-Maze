@@ -20,6 +20,38 @@
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "GLAUX.lib")
 
+#ifdef _DEBUG
+	#pragma comment(lib, "sfml-system-s-d.lib")
+	#pragma comment(lib, "sfml-window-s-d.lib")
+	#pragma comment(lib, "sfml-graphics-s-d.lib")
+	#pragma comment(lib, "sfml-audio-s-d.lib")
+#else
+	#pragma comment(lib, "sfml-system-s.lib")
+	#pragma comment(lib, "sfml-window-s.lib")
+	#pragma comment(lib, "sfml-graphics-s.lib")
+	#pragma comment(lib, "sfml-audio-s.lib")
+#endif
+
+#ifdef _DEBUG
+#pragma comment( lib, "libtheoraplayer_d.lib" )
+#else
+#pragma comment( lib, "libtheoraplayer.lib" )
+#endif
+
+#pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "glu32.lib")
+
+#include "SFML/Window.hpp"
+#include <assert.h>
+#include <windows.h>
+#include <GL/gl.h>
+#include "TheoraVideoManager.h"
+#include "TheoraVideoClip.h"
+#include "TheoraPlayer.h"
+#include "TheoraDataSource.h"
+#include "OpenAL_AudioInterface.h"
+
+
 #define MAX_NAME_LENGTH 15
 
 BOOL startGame = FALSE, menu = FALSE;
@@ -56,6 +88,138 @@ BOOL	bUseLighting	= FALSE;
 BOOL	bCullFaces		= FALSE;
 BOOL	bDrawNormals	= FALSE;
 BOOL	bNoClipping		= FALSE;
+
+unsigned int createTexture(int w,int h,unsigned int format=GL_RGB)
+{
+	unsigned int tex_id;
+	glGenTextures(1,&tex_id);
+	glBindTexture(GL_TEXTURE_2D,tex_id);
+	unsigned char* b=new unsigned char[w*h*4];
+	memset(b,0,w*h*4);
+
+	glTexImage2D(GL_TEXTURE_2D,0,(format == GL_RGB) ? 3 : 4,w,h,0,format,GL_UNSIGNED_BYTE,b);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	delete b;
+	return tex_id;
+}
+
+int nextPow2(int x)
+{
+	int y;
+	for (y=1;y<x;y*=2);
+	return y;
+}
+
+void drawTexturedQuad(float x,float y,float w,float h,float sw,float sh)
+{
+	glBegin (GL_QUADS);
+	glTexCoord2f(0,  0); glVertex3f(x,  y,  0.0f);
+	glTexCoord2f(sw, 0); glVertex3f(x+w,y,  0.0f);
+	glTexCoord2f(sw,sh); glVertex3f(x+w,y+h,0.0f);
+	glTexCoord2f(0, sh); glVertex3f(x,  y+h,0.0f);
+	glEnd();
+}
+
+void video()
+{
+	int i;
+		// Create the Theora video manager and the OpenAL audio interface factory, then link them
+	TheoraVideoManager* Manager = new TheoraVideoManager();
+	OpenAL_AudioInterfaceFactory* OpenAL_AIF = new OpenAL_AudioInterfaceFactory();
+	Manager->setAudioInterfaceFactory( OpenAL_AIF );
+
+    // Create the main window
+    sf::Window App(sf::VideoMode(320, 280, 32), "Cinematics playing");
+
+    // Create a clock for measuring time elapsed
+    sf::Clock Clock;
+	float time_slice = 0.0f;
+	float time_elapsed = Clock.GetElapsedTime();
+
+    // Set color and depth clear value
+    glClearDepth(1.f);
+	glClearColor(0.8f, 0.8f, 0.8f, 0.5f);
+	
+	// Enable 2D textures
+	glEnable(GL_TEXTURE_2D);
+
+    // Enable Z-buffer read and write
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+
+	//  Load a test clip in to be viewed
+	TheoraVideoClip* test_clip = NULL;
+	test_clip = Manager->createVideoClip( "Diablo_III_All_Cinematics.ogv" );
+	//test_clip = Manager->createVideoClip( new TheoraMemoryFileDataSource( "media/bunny.ogg" ), TH_RGB );
+	test_clip->setAutoRestart( true );
+
+	unsigned int TextureID = createTexture(nextPow2(test_clip->getWidth()),nextPow2(test_clip->getHeight()));
+
+	   // Start game loop
+	while (App.IsOpened())
+    {
+        // Process events
+        sf::Event Event;
+        while (App.GetEvent(Event))
+        {
+            // Close window : exit
+			if (Event.Type == sf::Event::Closed) {
+				App.Close();
+				bArrKeys['M'] = false;
+			}
+		}
+
+		//  Update time_slice
+		time_slice = Clock.GetElapsedTime() - time_elapsed;
+		time_elapsed = Clock.GetElapsedTime();
+
+        // Set the active window before using OpenGL commands
+        // It's useless here because active window is always the same,
+        // but don't forget it if you use multiple windows or controls
+        App.SetActive();
+
+		//UPDATE ANIMATION
+		if ( test_clip && !test_clip->isPaused() && test_clip->getNumReadyFrames() > test_clip->getNumPrecachedFrames() * 0.5f )
+		{
+			Manager->update( time_slice );
+		}
+		//UPDATE ANIMATION
+
+		/**/// 2D Rendering
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glViewport(0, 0, 320, 280);
+		gluOrtho2D(0, 320, 280, 0);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glDisable( GL_DEPTH_TEST );
+		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+
+		//RENDER ANIMATION
+		glBindTexture( GL_TEXTURE_2D, TextureID );
+		if ( TheoraVideoFrame* frame = test_clip->getNextFrame() )
+		{
+			glTexSubImage2D( GL_TEXTURE_2D, 0, 0, 0, test_clip->getWidth(), frame->getHeight(), GL_RGB, GL_UNSIGNED_BYTE, frame->getBuffer() );
+			test_clip->popFrame();
+		}
+		float w=float(test_clip->getWidth()),h=float(test_clip->getHeight());
+		float tw=float(nextPow2(int(w))),th=float(nextPow2(int(h)));
+		glEnable(GL_TEXTURE_2D);
+		drawTexturedQuad(0,0,float(test_clip->getWidth()), float(test_clip->getHeight()),w/tw,h/th);
+		//RENDER ANIMATION
+		/**/// 2D Rendering
+
+        // Finally, display rendered frame on screen
+        App.Display();
+	}
+
+	//  Delete the video manager and audio inferface factory
+	delete Manager;
+	delete OpenAL_AIF;
+}
+
+
 
 LRESULT CALLBACK WndProc(HWND	hWnd,
 						 UINT	uMsg,
@@ -157,6 +321,14 @@ void dispatchKeys() {
 	if (bArrKeys['R']) {
 		camReset();
 	}
+
+	if (bArrKeys['M']) {
+		video();
+		//ReleaseDC( hWnd, hDC );
+		//hWnd = NULL;
+		//hDC = GetDC( hWnd );
+    }
+
 	if (bArrKeys['P']) {
 		menu = TRUE;
 		bArrKeys['P'] = FALSE;
@@ -416,7 +588,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 	
 	bFullscreen = FALSE;
     // Create Our OpenGL Window
-	if (!createGLWindow(szTitle, 640, 480, 32, bFullscreen)) {
+	if (!createGLWindow(data, szTitle, 640, 480, 32, bFullscreen)) {
 		return 0;
 	}
 
