@@ -173,6 +173,7 @@ void dispatchKeys() {
 void dispatchKeys_userinput(){
 	if (bArrKeys[VK_RETURN]){
 		startGame = TRUE;
+		bArrKeys[VK_RETURN] = FALSE;
 	}
 	if (bArrKeys[8]){
 		index--;
@@ -318,7 +319,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 					bDone = TRUE;
 				} else {
 					if (startGame){
-						if (menu){
+						if (!menu){
 							drawGLScene();
 							SwapBuffers(hDC);
 							dispatchKeys();
