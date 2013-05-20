@@ -271,6 +271,8 @@ LRESULT CALLBACK WndProc(HWND	hWnd,
 	return DefWindowProc(hWnd,uMsg,wParam,lParam);
 }
 
+BOOL ok = false;
+
 void dispatchKeys() {
 	if (bArrKeys['L'] && !lp) {
 		lp = TRUE;
@@ -283,6 +285,9 @@ void dispatchKeys() {
 	}
 	if (!bArrKeys['L'])	{
 		lp = FALSE;
+	}
+	if(bArrKeys[VK_SPACE] ){
+		jumpschelet();
 	}
 	if (bArrKeys[VK_PRIOR])	{
 		camRotate(-0.9f, 0.0f, 0.0f);

@@ -888,13 +888,13 @@ int drawGLScene(int life)
 		
 		draw_Skybox(0, 0, 0, PCam->m_fPosX, PCam->m_fPosY, PCam->m_fPosZ);
 		
-		draw_ground(100,100,0,0,0.0);
+		draw_ground(50,50,0,0,0.0);
 
 		glPushMatrix();
 		
 		glEnable(GL_TEXTURE_2D);
 
-		scheletInstance->Move(PCam->m_fPosX + 1.5f, PCam->m_fPosY - 0.5f, PCam->m_fPosZ);
+		scheletInstance->Move(PCam->m_fPosX + 0.5f, PCam->m_fPosY - 0.5f, PCam->m_fPosZ);
 		//scheletInstance->Move(cos((90 - PCam->m_fYaw)/M_PI) -  sin((90 - PCam->m_fYaw)/M_PI),0,
 		//					 sin((90 - PCam->m_fYaw)/M_PI) + cos((90 - PCam->m_fYaw)/M_PI));
 		scheletInstance->Rotate(90 - PCam->m_fYaw);
@@ -918,3 +918,7 @@ void animateschelet(){
 	scheletInstance->Animate(0.008f);
 }
 
+void jumpschelet(){
+	scheletInstance->SetAnimation(CMD2Instance::ATTACK, CMD2Instance::IDLE);
+	scheletInstance->Animate(0.008f);
+}
