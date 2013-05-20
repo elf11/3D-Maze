@@ -395,7 +395,7 @@ void dispatchKeys_menu(){
 				initOpenGL(&data);
 				break;
 			case 3:
-				if (data.level >= 2){
+				if (data.level >= 1){
 					data.chosen_level = 2;
 					initOpenGL(&data);
 				}
@@ -403,7 +403,7 @@ void dispatchKeys_menu(){
 					return;
 				break;
 			case 4:
-				if (data.level >= 3){
+				if (data.level >= 2){
 					data.chosen_level = 3;
 					initOpenGL(&data);
 				}
