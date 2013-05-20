@@ -23,7 +23,10 @@ void save_user_data(game_data data, int userid) {
 	std::ofstream out(file.c_str());
 	out << data.level << std::endl;
 	out << data.life << std::endl;
+	out << data.chosen_level << std::endl;
+	out << data.name << std::endl;
 	out << data.guns << std::endl;
+	out << "DAsdas" << std::endl;
 
 	out.close();
 }
@@ -35,12 +38,23 @@ void load_user_data(game_data *data, int userid) {
 	std::string file = NumberToString(userid);
 	path.append(line);
 	std::ifstream infile(path.c_str());
+
 	//get level
 	std::getline(infile, line);
 	data->level = atoi(line.c_str());
-	//get level
+
+	//get life
 	std::getline(infile, line);
 	data->life = atoi(line.c_str());
+
+	//get chosen_level
+	std::getline(infile, line);
+	data->chosen_level = atoi(line.c_str());
+
+	//get name
+	std::getline(infile, line);
+	strcpy(data->name, line.c_str());
+	
 	//get guns
 	std::getline(infile, line);
 	data->guns = atoi(line.c_str());
@@ -85,9 +99,13 @@ void load_user(game_data *data, std::string user, int* u_id) {
 		newfile << 0 << std::endl;
 		newfile << 99 << std::endl;
 		newfile << 0 << std::endl;
+		newfile << 0 << std::endl;
+		newfile << user << std::endl;
 		data->level = 0;
 		data->life = 99;
 		data->guns = 0;
+		data->chosen_level = 0;
+		strcpy(data->name, (user.c_str()));
 	}
 
 	infile.close();
