@@ -9,11 +9,12 @@
 #define LEVEL_2		2
 #define LEVEL_3		3
 
-
 typedef struct {
 	int level;
 	int life;
+	char name[MAX_LENGTH];
 	int guns;
+	int chosen_level;
 } game_data;
 
 extern TCHAR    szTitle[MAX_LOADSTRING];					

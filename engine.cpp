@@ -114,7 +114,8 @@ int nrFreeCells = 0;
 
 TVertex arrVertices[MAZE_WIDTH * MAZE_HEIGHT * 6 * 2 * 3];
 
-int initOpenGL(game_data *data) {
+
+int initOpenGL(GLvoid) {
 
 	haze = maketex("up.bmp",512,512);
 	rroad = maketex("crosshair1.bmp", 600, 438);
@@ -127,16 +128,7 @@ int initOpenGL(game_data *data) {
 	//Generator gen = Generator(maxx, maxz);
 	//gen.mazeGen();
 
-	switch(data->chosen_level)
-	{
-	case 1:
-		FILE * f = fopen("maze0.txt", "r");
-	case 2:
-		FILE * f = fopen("maze1.txt", "r");
-	case 3:
-		FILE * f = fopen("maze2.txt", "r");
-	}
-
+	FILE * f = fopen("maze.txt", "r");
 	if (f == NULL)
 	{
 		printf("Eroare! Nu s-a putut gasi fisierul maze.txt\n");
@@ -165,24 +157,7 @@ int initOpenGL(game_data *data) {
 		for (int j = 0; j < MAZE_WIDTH; j += 1)
 			arrMazeData[i][j] = m[i][j];
 
-	for (int i = 0; i < MAZE_HEIGHT; i += 1)
-	{
-		for (int j = 0; j < MAZE_WIDTH; j += 1)
-		{
-			if (arrMazeData[i][j] == 2)
-			{
-				startPos.fX = arrMazeData[i][j] + 2.1;
-				startPos.fY = arrMazeData[i][j] + 2.2;
-			}
-			if (arrMazeData[i][j] == 3)
-			{
-				portalPos.fX = arrMazeData[i][j] + 2.1;
-				portalPos.fY = arrMazeData[i][j] + 2.2; 
-			}
-		}
-	}
-
-	/*freeCells = (TVector2D *)malloc(maxx * maxz * sizeof(TVector2D));
+	freeCells = (TVector2D *)malloc(maxx * maxz * sizeof(TVector2D));
 
 	for (int i = 0; i < MAZE_HEIGHT; i += 1)
 		for (int j = 0; j < MAZE_WIDTH; j += 1)
@@ -203,8 +178,7 @@ int initOpenGL(game_data *data) {
 	startPos.fY = startPos.fY + 2.2;
 
 	portalPos = freeCells[24];
-	*/
-	
+			
     if (!loadGLTextures()) {
 		return FALSE;                                    
 	}
@@ -295,7 +269,7 @@ GLvoid destroyGLWindow(GLvoid)	{
 	}
 }
 
-BOOL createGLWindow(game_data *data, TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreenFlag) {
+BOOL createGLWindow(game_data data, TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreenFlag) {
     GLuint		PixelFormat;
     WNDCLASS	wc;					        		           
     DWORD		dwExStyle;

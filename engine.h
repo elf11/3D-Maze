@@ -7,7 +7,7 @@ extern int nFrames;
 extern int nFPS;
 extern DWORD dwLastFPS;
 
-int initOpenGL(void);
+int initOpenGL(game_data*);
 
 int drawGLScene(int life);
 void draw_ground(int dimx, int dimy, int tessx, int tessy, float height);
@@ -21,7 +21,7 @@ int loadGLTextures(void);
 void redisplay();
 
 void destroyGLWindow(void);
-BOOL createGLWindow(game_data data, TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreen);
+BOOL createGLWindow(game_data *data, TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreen);
 void resizeGLScene(int nWidth, int nHeight);
 
 void camForward(float fSpeed);
