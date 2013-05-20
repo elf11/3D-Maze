@@ -128,7 +128,19 @@ int initOpenGL(game_data *data) {
 	//Generator gen = Generator(maxx, maxz);
 	//gen.mazeGen();
 
-	FILE * f = fopen("maze.txt", "r");
+	FILE * f = fopen("maze0.txt", "r");
+	switch(data->chosen_level)
+	{
+	case 1:
+		f = fopen("maze0.txt", "r");
+		break;
+	case 2:
+		f = fopen("maze1.txt", "r");
+		break;
+	case 3:
+		f = fopen("maze2.txt", "r");
+		break;
+	}
 	if (f == NULL)
 	{
 		printf("Eroare! Nu s-a putut gasi fisierul maze.txt\n");
@@ -157,7 +169,7 @@ int initOpenGL(game_data *data) {
 		for (int j = 0; j < MAZE_WIDTH; j += 1)
 			arrMazeData[i][j] = m[i][j];
 
-	freeCells = (TVector2D *)malloc(maxx * maxz * sizeof(TVector2D));
+	/*freeCells = (TVector2D *)malloc(maxx * maxz * sizeof(TVector2D));
 
 	for (int i = 0; i < MAZE_HEIGHT; i += 1)
 		for (int j = 0; j < MAZE_WIDTH; j += 1)
@@ -178,7 +190,25 @@ int initOpenGL(game_data *data) {
 	startPos.fY = startPos.fY + 2.2;
 
 	portalPos = freeCells[24];
-			
+	*/
+
+	for (int i = 0; i < MAZE_HEIGHT; i += 1)
+	{
+		for (int j = 0; j < MAZE_WIDTH; j += 1)
+		{
+			if (arrMazeData[i][j] == 2)
+			{
+				startPos.fX = i + 2.1;
+				startPos.fY = j + 2.2;
+			}
+			if (arrMazeData[i][j] == 3)
+			{
+				portalPos.fX = i + 2.1;
+				portalPos.fY = j + 2.2;
+			}
+		}
+	}
+
     if (!loadGLTextures()) {
 		return FALSE;                                    
 	}
