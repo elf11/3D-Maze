@@ -200,13 +200,13 @@ int initOpenGL(game_data *data) {
 		{
 			if (arrMazeData[i][j] == 2)
 			{
-				startPos.fX = i + 4.5;
-				startPos.fY = j - 3.5;
+				startPos.fX = j + 0.5;
+				startPos.fY = i + 0.5;
 			}
 			if (arrMazeData[i][j] == 3)
 			{
-				portalPos.fX = i + 4.5;
-				portalPos.fY = j - 3.5;
+				portalPos.fX = j + 0.5;
+				portalPos.fY = i + 0.5;
 			}
 		}
 	}
