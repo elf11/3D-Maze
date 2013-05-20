@@ -895,12 +895,14 @@ int drawGLScene(int life, game_data *data)
 		glEnable(GL_TEXTURE_2D);
 
 		scheletInstance->Move(PCam->m_fPosX + 0.5f, PCam->m_fPosY - 0.5f, PCam->m_fPosZ);
-		
-		if (PCam->m_fPosX == portalPos.fX && PCam->m_fPosZ == portalPos.fY)
+		FILE *coliziune = fopen("coliziune.txt", "w");
+		if (portalPos.fX == PCam->m_fPosX + 0.5f && PCam->m_fPosZ == portalPos.fY)
 		{
+			fprintf(coliziune, "coliziune\n"); 
 			data->level = (data->level + 1) % 3;
 			initOpenGL(data);
 		}
+		fclose(coliziune);
 		//scheletInstance->Move(cos((90 - PCam->m_fYaw)/M_PI) -  sin((90 - PCam->m_fYaw)/M_PI),0,
 		//					 sin((90 - PCam->m_fYaw)/M_PI) + cos((90 - PCam->m_fYaw)/M_PI));
 		scheletInstance->Rotate(90 - PCam->m_fYaw);
