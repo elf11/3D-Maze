@@ -30,5 +30,6 @@ void camElevate(float fSpeed);
 void camRotate(float fRoll, float fPitch, float fYaw);
 void camAdjustSpeed(float fSpeedMult);
 void camReset();
+void animateschelet();
 
 #endif
