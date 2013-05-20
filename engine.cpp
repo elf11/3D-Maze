@@ -843,7 +843,11 @@ int drawGLScene(int life)
 	    glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
 		glEnable(GL_LIGHT1);
 
-		
+		glPushMatrix();
+		glColor3f( 0.8f, 0.8f, 0.8f);
+		glTranslatef(portalPos.fX , 0.4f, portalPos.fY);
+		glutSolidTorus(0.1, 0.2, 15, 15);
+		glPopMatrix();
 
 		glPushMatrix();
 		glColor3f( 0.8f, 0.8f, 0.8f);
