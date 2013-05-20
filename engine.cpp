@@ -833,9 +833,9 @@ int drawGLScene(int life)
 	    glRotatef(PCam->m_fPitch, 1.0f, 0.0f, 0.0f);
 	    glRotatef(PCam->m_fRoll,  0.0f, 0.0f, 1.0f);
 	    glRotatef(PCam->m_fYaw,   0.0f, 1.0f, 0.0f);
-	    glTranslatef(-PCam->m_fPosX,
-	                 -PCam->m_fPosY,
-	                 -PCam->m_fPosZ);
+	    glTranslatef(-PCam->m_fPosX - 0.7,
+	                 -PCam->m_fPosY - 0.8,
+	                 -PCam->m_fPosZ );
 	
 	    LightPosition[0] = PCam->m_fPosX;
 	    LightPosition[1] = PCam->m_fPosY;
