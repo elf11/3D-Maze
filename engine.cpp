@@ -128,7 +128,7 @@ int initOpenGL(game_data *data) {
 	//Generator gen = Generator(maxx, maxz);
 	//gen.mazeGen();
 
-	FILE * f;
+	FILE * f = fopen("maze0.txt", "r");
 	switch(data->chosen_level)
 	{
 	case 1:
