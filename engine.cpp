@@ -200,13 +200,13 @@ int initOpenGL(game_data *data) {
 		{
 			if (arrMazeData[i][j] == 2)
 			{
-				startPos.fX = i + 2.1;
-				startPos.fY = j + 2.2;
+				startPos.fX = i + 4.5;
+				startPos.fY = j - 3.5;
 			}
 			if (arrMazeData[i][j] == 3)
 			{
-				portalPos.fX = i + 2.1;
-				portalPos.fY = j + 2.2;
+				portalPos.fX = i + 4.5;
+				portalPos.fY = j - 3.5;
 			}
 		}
 	}
@@ -651,7 +651,7 @@ void initLists() {
 }
 
 int isWall(int x,int y) {
-        return ((x >= 0) && (y >= 0) && (x < MAZE_WIDTH) && (y < MAZE_HEIGHT) && (arrMazeData[x][y] != 0));
+        return ((x >= 0) && (y >= 0) && (x < MAZE_WIDTH) && (y < MAZE_HEIGHT) && (arrMazeData[x][y] == 1));
 }
 
 void genWallMesh() {
