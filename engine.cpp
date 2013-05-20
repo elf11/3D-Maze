@@ -895,14 +895,19 @@ int drawGLScene(int life, game_data *data)
 		glEnable(GL_TEXTURE_2D);
 
 		scheletInstance->Move(PCam->m_fPosX + 0.5f, PCam->m_fPosY - 0.5f, PCam->m_fPosZ);
-		FILE *coliziune = fopen("coliziune.txt", "w");
-		if (portalPos.fX == PCam->m_fPosX + 0.5f && PCam->m_fPosZ == portalPos.fY)
+		//FILE *coliziune = fopen("coliziune.txt", "w");
+		//fprintf(coliziune, "pos %f, %f\n", portalPos.fX, portalPos.fY);
+		//fprintf(coliziune, "pos-camera %f, %f\n", PCam->m_fPosX, PCam->m_fPosZ);
+		//fprintf(coliziune, "start %f, %f\n", startPos.fX, startPos.fY);
+		if (floor(portalPos.fX) == floor(PCam->m_fPosX + 0.5f) && floor(PCam->m_fPosZ) == floor(portalPos.fY))
 		{
-			fprintf(coliziune, "coliziune\n"); 
+			//fprintf(coliziune, "pos %f, %f\n", portalPos.fX, portalPos.fY); 
 			data->level = (data->level + 1) % 3;
+			//fprintf(coliziune, "coliziune level = %i\n", data->level);
 			initOpenGL(data);
 		}
-		fclose(coliziune);
+		//fprintf(coliziune, "coliziune level = %i\n", data->level);
+		//fclose(coliziune);
 		//scheletInstance->Move(cos((90 - PCam->m_fYaw)/M_PI) -  sin((90 - PCam->m_fYaw)/M_PI),0,
 		//					 sin((90 - PCam->m_fYaw)/M_PI) + cos((90 - PCam->m_fYaw)/M_PI));
 		scheletInstance->Rotate(90 - PCam->m_fYaw);
