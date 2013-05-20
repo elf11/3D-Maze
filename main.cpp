@@ -324,6 +324,7 @@ void dispatchKeys() {
 
 	if (bArrKeys['M']) {
 		//video_draw = TRUE;
+		video();
 		bArrKeys['M'] = false;
     }
 
