@@ -292,15 +292,19 @@ void dispatchKeys() {
 	}
 	if (bArrKeys['W'])	{
 		camForward(-0.02f);
+		animateschelet();
 	}
 	if (bArrKeys['S'])	{
 		camForward(0.02f);
+		animateschelet();
 	}
 	if (bArrKeys['A'])	{
 		camStrafe(-0.02f);
+		animateschelet();
 	}
 	if (bArrKeys['D'])	{
 		camStrafe(0.02f);
+		animateschelet();
 	}
 	if (bArrKeys['C']) {
 		fsP = !fsP;
