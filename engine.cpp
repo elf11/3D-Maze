@@ -826,6 +826,7 @@ int drawGLScene(int life)
 	glPushMatrix();
 
         PCam->mouseLook();
+
         if (!bNoClipping) {
             PCam->checkCollision(arrVertices);
         }
@@ -892,8 +893,10 @@ int drawGLScene(int life)
 		glPushMatrix();
 		
 		glEnable(GL_TEXTURE_2D);
-		
+
 		scheletInstance->Move(PCam->m_fPosX + 1.5f, PCam->m_fPosY - 0.5f, PCam->m_fPosZ);
+		//scheletInstance->Move(cos((90 - PCam->m_fYaw)/M_PI) -  sin((90 - PCam->m_fYaw)/M_PI),0,
+		//					 sin((90 - PCam->m_fYaw)/M_PI) + cos((90 - PCam->m_fYaw)/M_PI));
 		scheletInstance->Rotate(90 - PCam->m_fYaw);
 		scheletInstance->Render();
 		
@@ -907,3 +910,11 @@ int drawGLScene(int life)
 
 	return TRUE;
 }
+
+
+
+void animateschelet(){
+	scheletInstance->SetAnimation(CMD2Instance::RUN,CMD2Instance::IDLE);
+	scheletInstance->Animate(0.008f);
+}
+
