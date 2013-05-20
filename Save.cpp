@@ -73,13 +73,13 @@ void load_user(game_data *data, std::string user, int* u_id) {
 	std::ofstream outfile("out.txt");
 	while (std::getline(infile, line)) {
 		if (line.compare(user) == 0) {
-			user_found = TRUE;
-			id = *u_id;
+			user_found = TRUE;;
 			break;
 		}
 		i++;
 	}
 	*u_id = i;
+	id = *u_id;
 
 	if (user_found == TRUE) {
 		outfile << "user found \n";
