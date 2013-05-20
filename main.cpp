@@ -354,6 +354,7 @@ void dispatchKeys() {
 void dispatchKeys_userinput(){
 	if (bArrKeys[VK_RETURN]){
 		startGame = TRUE;
+		menu = TRUE;
 		bArrKeys[VK_RETURN] = FALSE;
 	}
 	if (bArrKeys[8]){
@@ -373,9 +374,35 @@ void dispatchKeys_userinput(){
 
 void dispatchKeys_menu(){
 	if (bArrKeys[VK_RETURN]){
+		bArrKeys[VK_RETURN] = FALSE;
+
+		switch(menuIndex){
+			case 2:
+				data.chosen_level = 1;
+				initOpenGL();
+				break;
+			case 3:
+				if (data.level >= 2){
+					data.chosen_level = 2;
+					initOpenGL();
+				}
+				else
+					return;
+				break;
+			case 4:
+				if (data.level >= 3){
+					data.chosen_level = 3;
+					initOpenGL();
+				}
+				else
+					return;
+				break;
+			default:
+				return;
+		}
+
 		menu = FALSE;
 		menuIndex = 0;
-		bArrKeys[VK_RETURN] = FALSE;
 	}
 	if (bArrKeys[VK_DOWN]){
 		menuIndex++;
@@ -587,7 +614,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 	
 	bFullscreen = FALSE;
     // Create Our OpenGL Window
-	if (!createGLWindow(data, szTitle, 640, 480, 32, bFullscreen)) {
+	if (!createGLWindow(&data, szTitle, 640, 480, 32, bFullscreen)) {
 		return 0;
 	}
 
