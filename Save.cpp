@@ -20,7 +20,7 @@ void save_user_data(game_data data, int userid) {
 	std::string file = NumberToString(userid);
 	path.append(file.c_str());
 
-	std::ofstream out(path.c_str()`);
+	std::ofstream out(path.c_str());
 	out << data.level << std::endl;
 	out << data.life << std::endl;
 	out << data.chosen_level << std::endl;
