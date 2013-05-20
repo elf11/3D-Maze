@@ -158,7 +158,9 @@ int initOpenGL(game_data *data) {
 			m[i] = (int *)malloc(maxz * sizeof(int));
 		} else {
 			if (c == '0') m[i][j] = 0;
-			else m[i][j] = 1;
+			if (c == '1') m[i][j] = 1;
+			if (c == '2') m[i][j] = 2;
+			if (c == '3') m[i][j] = 3;
 			j += 1;
 		}
 	}
