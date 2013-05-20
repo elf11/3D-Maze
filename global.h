@@ -9,6 +9,7 @@
 #define LEVEL_2		2
 #define LEVEL_3		3
 
+
 typedef struct {
 	int level;
 	int life;
