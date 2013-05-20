@@ -115,7 +115,7 @@ int nrFreeCells = 0;
 TVertex arrVertices[MAZE_WIDTH * MAZE_HEIGHT * 6 * 2 * 3];
 
 
-int initOpenGL(GLvoid) {
+int initOpenGL(game_data *data) {
 
 	haze = maketex("up.bmp",512,512);
 	rroad = maketex("crosshair1.bmp", 600, 438);
@@ -269,7 +269,7 @@ GLvoid destroyGLWindow(GLvoid)	{
 	}
 }
 
-BOOL createGLWindow(game_data data, TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreenFlag) {
+BOOL createGLWindow(game_data *data, TCHAR* szWndTitle, int nWidth, int nHeight, int iBits, bool bFullscreenFlag) {
     GLuint		PixelFormat;
     WNDCLASS	wc;					        		           
     DWORD		dwExStyle;
@@ -379,7 +379,7 @@ BOOL createGLWindow(game_data data, TCHAR* szWndTitle, int nWidth, int nHeight, 
 	SetFocus(hWnd);			                    					
 	resizeGLScene(nWidth, nHeight);				            		
 
-    if (!initOpenGL(&data)) {                							
+    if (!initOpenGL(data)) {                							
 		destroyGLWindow();	                						
 		return FALSE;	                    						
 	}
