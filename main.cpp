@@ -54,7 +54,7 @@
 
 #define MAX_NAME_LENGTH 15
 
-BOOL startGame = FALSE, menu = FALSE;
+BOOL startGame = FALSE, menu = FALSE, help = FALSE;
 
 TCHAR		szTitle[MAX_LOADSTRING];
 TCHAR		szWindowClass[MAX_LOADSTRING];
@@ -377,6 +377,10 @@ void dispatchKeys_menu(){
 		bArrKeys[VK_RETURN] = FALSE;
 
 		switch(menuIndex){
+			case 1:
+				menu = FALSE;
+				help = TRUE;
+				break;
 			case 2:
 				data.chosen_level = 1;
 				initOpenGL();
@@ -386,19 +390,15 @@ void dispatchKeys_menu(){
 					data.chosen_level = 2;
 					initOpenGL();
 				}
-				else
-					return;
 				break;
 			case 4:
 				if (data.level >= 3){
 					data.chosen_level = 3;
 					initOpenGL();
 				}
-				else
-					return;
 				break;
 			default:
-				return;
+				break;
 		}
 
 		menu = FALSE;
@@ -415,6 +415,14 @@ void dispatchKeys_menu(){
 		if (menuIndex < 0)
 			menuIndex = 5;
 		bArrKeys[VK_UP] = FALSE;
+	}
+}
+
+void dispatchKeys_help(){
+	if (bArrKeys[VK_RETURN]){
+		help = FALSE;
+		menu = TRUE;
+		bArrKeys[VK_RETURN] = FALSE;
 	}
 }
 
@@ -474,6 +482,32 @@ int drawUserInputBox(){
 	for (int i = 0; i < index; i++){
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, username[i]);
 	}
+
+	glEnable(GL_DEPTH_TEST);
+
+	return TRUE;
+}
+
+int drawHelp(){
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0, 0, 0, 1);
+	glLoadIdentity();
+
+	glDisable(GL_DEPTH_TEST);
+
+	glScalef(8.0, 8.0, 8.0);
+	glTranslatef(0, 0, -1);
+
+	glColor3f(0.0f,1.0f,0.0f);
+
+	glLineWidth(0.5); 
+	glColor3f(1.0, 1.0, 1.0);
+
+	glRasterPos2f(-0.4, 0.15);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'H');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'E');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'L');
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 'P');
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -647,7 +681,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 							addUser = 0;
 						}	
 
-						if (!menu){
+						if (!menu && !help){
 							melc++;
 							if (melc== 400) {
 									data.life --;
@@ -659,9 +693,16 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 							dispatchKeys();
 						}
 						else{
-							drawMenu();
-							SwapBuffers(hDC);
-							dispatchKeys_menu();
+							if (menu){
+								drawMenu();
+								SwapBuffers(hDC);
+								dispatchKeys_menu();
+							}
+							if (help){
+								drawHelp();
+								SwapBuffers(hDC);
+								dispatchKeys_help();
+							}
 						}
 					}
 					else{
