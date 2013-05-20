@@ -383,18 +383,18 @@ void dispatchKeys_menu(){
 				break;
 			case 2:
 				data.chosen_level = 1;
-				initOpenGL();
+				initOpenGL(&data);
 				break;
 			case 3:
 				if (data.level >= 2){
 					data.chosen_level = 2;
-					initOpenGL();
+					initOpenGL(&data);
 				}
 				break;
 			case 4:
 				if (data.level >= 3){
 					data.chosen_level = 3;
-					initOpenGL();
+					initOpenGL(&data);
 				}
 				break;
 			default:
