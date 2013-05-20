@@ -345,7 +345,7 @@ void dispatchKeys() {
 		}
 	}
 
-	if (bArrKeys['S']) {
+	if (bArrKeys['O']) {
 		//write data in user's file
 		save_user_data(data, user_id);
 	}
@@ -672,6 +672,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 			// Draw the scene.  Watch for ESC key and quit messages
 			if (bActive) {
 				if (bArrKeys[VK_ESCAPE]) {
+					save_user_data(data, user_id);
 					bDone = TRUE;
 				} else {
 					if (startGame){
