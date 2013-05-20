@@ -819,7 +819,7 @@ void redisplay()
 	glPopMatrix();
 }
 
-int drawGLScene(int life)	
+int drawGLScene(int life, game_data *data)	
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -895,6 +895,12 @@ int drawGLScene(int life)
 		glEnable(GL_TEXTURE_2D);
 
 		scheletInstance->Move(PCam->m_fPosX + 0.5f, PCam->m_fPosY - 0.5f, PCam->m_fPosZ);
+		
+		if (PCam->m_fPosX == portalPos.fX && PCam->m_fPosZ == portalPos.fY)
+		{
+			data->level = (data->level + 1) % 3;
+			initOpenGL(data);
+		}
 		//scheletInstance->Move(cos((90 - PCam->m_fYaw)/M_PI) -  sin((90 - PCam->m_fYaw)/M_PI),0,
 		//					 sin((90 - PCam->m_fYaw)/M_PI) + cos((90 - PCam->m_fYaw)/M_PI));
 		scheletInstance->Rotate(90 - PCam->m_fYaw);

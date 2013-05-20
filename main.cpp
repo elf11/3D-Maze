@@ -667,7 +667,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 
 	PlaySound(TEXT("lotr.wav"), NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
 
-	drawGLScene(data.life);
+	drawGLScene(data.life, &data);
 	SwapBuffers(hDC);
 
 
@@ -702,7 +702,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,
 									melc = 0;
 							}
 
-							drawGLScene(data.life);
+							drawGLScene(data.life, &data);
 							SwapBuffers(hDC);
 							dispatchKeys();
 						}
